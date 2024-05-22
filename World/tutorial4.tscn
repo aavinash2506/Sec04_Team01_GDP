@@ -1,0 +1,82 @@
+[gd_scene load_steps=6 format=3 uid="uid://g3ptt65v67u3"]
+
+[ext_resource type="Script" path="res://World/tutorial4.gd" id="1_k3gv5"]
+[ext_resource type="Texture2D" uid="uid://dy062gy0jp6mt" path="res://Assets/Animations/softwareDolphin-removebg-preview.png" id="2_mkwv7"]
+[ext_resource type="Theme" uid="uid://d31rns0bis8jm" path="res://Menu_Theme.tres" id="3_pma6a"]
+[ext_resource type="Theme" uid="uid://q2pxe47w6snq" path="res://MainMenu.tres" id="4_i4cbl"]
+
+[sub_resource type="GDScript" id="GDScript_4byjl"]
+
+[node name="tutorial4" type="CanvasLayer"]
+script = ExtResource("1_k3gv5")
+
+[node name="Bubble Effects" type="Sprite2D" parent="."]
+
+[node name="Dolphin" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(839.375, 431.75)
+rotation = 0.0575959
+scale = Vector2(0.919388, 0.837065)
+texture = ExtResource("2_mkwv7")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("3_pma6a")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="PanelContainer"]
+layout_mode = 2
+theme = ExtResource("4_i4cbl")
+script = SubResource("GDScript_4byjl")
+
+[node name="Control" type="Control" parent="PanelContainer/ScrollContainer"]
+layout_mode = 2
+
+[node name="Basics" type="RichTextLabel" parent="PanelContainer/ScrollContainer/Control"]
+layout_mode = 2
+offset_right = 992.0
+offset_bottom = 562.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_font_sizes/normal_font_size = 0
+bbcode_enabled = true
+text = "
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[center][font_size=64] Level4-Tutorial [/font_size][/center]"
+fit_content = true
+
+[node name="Button" type="Button" parent="."]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -92.5
+offset_top = -70.0
+offset_right = 92.5
+offset_bottom = -48.0
+grow_horizontal = 2
+grow_vertical = 0
+theme = ExtResource("4_i4cbl")
+theme_override_font_sizes/font_size = 32
+text = "Return"
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
