@@ -41,11 +41,11 @@ size_flags_vertical = 3
 theme_override_font_sizes/normal_font_size = 0
 bbcode_enabled = true
 text = "[center][font_size=64] How To Play:[/font_size][/center]
-[font_size=18]Chemicals:[/font_size]
+[font_size=20]Chemicals:[/font_size]
 
-[color=red]Acids[/color] - Dangerous, avoid contact at all costs
+[color=green]Acids[/color] - Dangerous, avoid contact at all costs
 
-[color=deepskyblue]Bases[/color] - Dangerous, but safe to slash at
+[color=blue]Bases[/color] - Dangerous, but safe to slash at
 
 [color=green]Neutral[/color]* - Safe, can hit platform without causing harm
 
@@ -53,9 +53,9 @@ text = "[center][font_size=64] How To Play:[/font_size][/center]
 
 Jump over [color=red]acids[/color] using [font_size=18]W, UP, or SPACE[/font_size], as they'll cover the platform.
 
-Slash at [color=deepskyblue]bases[/color] using [font_size=18]D, RIGHT, or F[/font_size], as they'll splash you otherwise.
+Slash at [color=blue]bases[/color] using [font_size=18]D, RIGHT, or F[/font_size], as they'll splash you otherwise.
 
-You can ignore [color=green]neutral[/color]* compounds, as they are harmless in this simulation.
+You can ignore [color=yellow]neutral[/color]* compounds, as they are harmless in this simulation.
 
 If unsure, you can dodge using [font_size=18]A or LEFT[/font_size], though it will cost you half a heart.
 
