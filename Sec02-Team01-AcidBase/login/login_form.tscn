@@ -1,0 +1,203 @@
+[gd_scene load_steps=11 format=3 uid="uid://2qsit1qo52qr"]
+
+[ext_resource type="Script" path="res://login/login_form.gd" id="1_b8g6p"]
+[ext_resource type="Theme" uid="uid://d31rns0bis8jm" path="res://Menu_Theme.tres" id="1_hyoc6"]
+[ext_resource type="PackedScene" uid="uid://dwd8ry3kcc7gm" path="res://Projectiles/bubble_particles.tscn" id="2_kt2hq"]
+[ext_resource type="Theme" uid="uid://q2pxe47w6snq" path="res://MainMenu.tres" id="3_j3ypg"]
+[ext_resource type="AudioStream" uid="uid://cx68svtqk1g87" path="res://Assets/login.ogg" id="5_2rv7p"]
+
+[sub_resource type="GDScript" id="GDScript_o8nn4"]
+script/source = "extends CanvasLayer
+
+
+
+
+func _on_play_pressed():
+	get_tree().change_scene_to_file(\"res://World/menu.tscn\")
+	pass 
+
+
+func _on_quit_pressed():
+	get_tree().quit() # Replace with function body.
+"
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1ic61"]
+
+[sub_resource type="Theme" id="Theme_lrk0s"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ueq7e"]
+content_margin_left = 5.0
+content_margin_top = 0.0
+content_margin_right = 5.0
+content_margin_bottom = 0.0
+bg_color = Color(0.0980392, 0.0980392, 0.0980392, 0.156863)
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+shadow_size = 2
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_81286"]
+
+[node name="Account_Create" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="menu" type="CanvasLayer" parent="."]
+script = SubResource("GDScript_o8nn4")
+
+[node name="Panel" type="Panel" parent="menu"]
+offset_right = 1000.0
+offset_bottom = 720.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme = ExtResource("1_hyoc6")
+theme_override_styles/panel = SubResource("StyleBoxEmpty_1ic61")
+
+[node name="BubbleParticles" parent="menu/Panel" instance=ExtResource("2_kt2hq")]
+texture_filter = 1
+position = Vector2(500, 800)
+amount = 8
+lifetime = 8.0
+randomness = 0.0
+lifetime_randomness = 0.0
+emission_rect_extents = Vector2(500, 4)
+spread = 3.0
+gravity = Vector2(0, -10)
+initial_velocity_min = 200.0
+initial_velocity_max = 220.0
+angular_velocity_min = 5.0
+linear_accel_min = 0.0
+angle_min = -180.0
+angle_max = 180.0
+color_ramp = null
+
+[node name="Title" type="RichTextLabel" parent="menu/Panel"]
+layout_mode = 0
+offset_left = 40.0
+offset_top = 80.0
+offset_right = 968.0
+offset_bottom = 386.0
+size_flags_vertical = 0
+size_flags_stretch_ratio = 2.0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 0
+theme_override_font_sizes/normal_font_size = 128
+bbcode_enabled = true
+text = "[center][color=dark_red]CREATE[/color] [color=deepskyblue]ACCOUNT[/color][/center]
+[center] 
+"
+
+[node name="PanelContainer" type="PanelContainer" parent="menu/Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.771
+offset_top = -80.0
+offset_bottom = 131.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("3_j3ypg")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="menu/Panel/PanelContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Label" type="Label" parent="menu/Panel/PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Enter Details
+"
+
+[node name="email_input" type="TextEdit" parent="menu/Panel/PanelContainer/VBoxContainer"]
+custom_minimum_size = Vector2(375, 35)
+layout_direction = 2
+layout_mode = 2
+size_flags_vertical = 4
+theme = SubResource("Theme_lrk0s")
+theme_override_constants/line_spacing = 10
+placeholder_text = "Email"
+autowrap_mode = 1
+
+[node name="password_input" type="TextEdit" parent="menu/Panel/PanelContainer/VBoxContainer"]
+visible = false
+custom_minimum_size = Vector2(150, 35)
+layout_mode = 2
+theme_override_constants/line_spacing = 10
+theme_override_constants/caret_width = 0
+text = "111111"
+placeholder_text = "Password"
+use_custom_word_separators = true
+
+[node name="password_line_edit" type="LineEdit" parent="menu/Panel/PanelContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 35)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_ueq7e")
+placeholder_text = "Password"
+secret = true
+
+[node name="first_name" type="LineEdit" parent="menu/Panel/PanelContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 35)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_ueq7e")
+placeholder_text = "First Name"
+
+[node name="last_name" type="LineEdit" parent="menu/Panel/PanelContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 35)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_ueq7e")
+placeholder_text = "Last Name"
+
+[node name="create_account" type="Button" parent="menu/Panel/PanelContainer/VBoxContainer/last_name"]
+visible = false
+layout_mode = 0
+text = "Create Account"
+
+[node name="create_account" type="Button" parent="menu/Panel/PanelContainer/VBoxContainer/last_name/create_account"]
+visible = false
+layout_mode = 0
+text = "Create Account"
+
+[node name="create_account" type="Button" parent="menu/Panel/PanelContainer/VBoxContainer/last_name/create_account/create_account"]
+visible = false
+layout_mode = 0
+text = "Create Account"
+
+[node name="Login" type="Button" parent="menu/Panel/PanelContainer/VBoxContainer"]
+layout_mode = 2
+text = "Login"
+
+[node name="Signup" type="Button" parent="menu/Panel/PanelContainer/VBoxContainer"]
+layout_mode = 2
+text = "SignUp"
+script = ExtResource("1_b8g6p")
+
+[node name="feedback_label" type="Label" parent="menu/Panel/PanelContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_81286")
+text = "Create Account"
+horizontal_alignment = 1
+autowrap_mode = 1
+justification_flags = 162
+
+[node name="create_account" type="Button" parent="menu/Panel/PanelContainer/VBoxContainer"]
+layout_mode = 2
+text = "Create Account"
+
+[node name="already_account" type="Button" parent="menu/Panel/PanelContainer/VBoxContainer"]
+layout_mode = 2
+text = "Already have an Account?"
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+position = Vector2(27.9309, 362.798)
+stream = ExtResource("5_2rv7p")
+autoplay = true
