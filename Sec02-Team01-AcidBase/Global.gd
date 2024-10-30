@@ -213,6 +213,7 @@ func query_user_by_email(email: String) -> void:
 	
 	var users = [] 
 	
+	
 	var results = await Firebase.Firestore.query(query)
 	print("Query>>>>>>: "+ str(results))
 	

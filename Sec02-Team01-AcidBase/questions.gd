@@ -6,6 +6,7 @@ var id: String
 var compoundType: String
 var formulaValue: String
 
+
 func _init(id: String, data: Dictionary) -> void:
 	self.id = id
 	for key in data.keys():
