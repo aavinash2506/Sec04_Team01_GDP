@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ACID BASE Game - Scores</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: black; /* Black background */
+            margin: 0;
+        }
+
+        .container {
+            text-align: center;
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 800px;
+            height: 80vh; /* Adjusted to ensure container has space */
+            display: flex;
+            flex-direction: column;
+        }
+
+        h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+            color: white; /* White text for the header */
+        }
+
+        h2 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            color: black; /* Black color for the title */
+        }
+
+        .search-container {
+            margin-bottom: 15px;
+        }
+
+        .search-container input {
+            padding: 10px;
+            width: 200px; /* Match the width of the back button */
+            font-size: 1.2em;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .list-container {
+            flex: 1;
+            overflow-y: auto;
+            max-height: 70vh; /* Makes the list scrollable */
+            border: 1px solid #ccc;
+            padding: 10px;
+            border-radius: 10px;
+            background-color: white;
+        }
+
+        .student {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: left;
+        }
+
+        .student:hover {
+            background-color: #45a049;
+        }
+
+        .score-details {
+            display: none;
+            background-color: #f9f9f9;
+            margin: 10px 0;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            color: black; /* Black text inside the score details */
+        }
+
+        .back-btn {
+            margin-top: 20px;
+            text-decoration: none;
+            background-color: #008CBA;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            width: 200px; /* Set fixed width for the back button */
+            display: inline-block;
+        }
+
+        .back-btn:hover {
+            background-color: #007bb5;
+        }
+    </style>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+        import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCLISdftVxzhPWSVUuYc7osmEg6v4fomTQ",
+            authDomain: "acidbasegame-a9d8a.firebaseapp.com",
+            projectId: "acidbasegame-a9d8a",
+            storageBucket: "acidbasegame-a9d8a.appspot.com",
+            messagingSenderId: "1038707828573",
+            appId: "1:1038707828573:web:56a1902384530d98a3aab4"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        let studentsList = [];  // Keep track of all students
+
+        async function loadScores() {
+            const usersCollection = collection(db, "users");
+            const usersSnapshot = await getDocs(usersCollection);
+            const usersListElement = document.getElementById('usersList');
+
+            usersSnapshot.forEach((doc) => {
+                const userData = doc.data();
+                studentsList.push(userData);  // Store the student data for filtering later
+
+                const studentDiv = createStudentDiv(userData);
+                usersListElement.appendChild(studentDiv);
+            });
+        }
+
+        function createStudentDiv(userData) {
+            const studentDiv = document.createElement('div');
+            studentDiv.classList.add('student');
+            studentDiv.innerHTML = `${userData.first_name} ${userData.last_name}`;
+            studentDiv.dataset.name = `${userData.first_name.toLowerCase()} ${userData.last_name.toLowerCase()}`;
+            studentDiv.onclick = () => toggleScoreDetails(studentDiv, userData);
+
+            const scoreDetailsDiv = document.createElement('div');
+            scoreDetailsDiv.classList.add('score-details');
+            scoreDetailsDiv.innerHTML = `
+                <p><strong>Email:</strong> ${userData.email}</p>
+                <p><strong>Highest Score:</strong> ${userData.highest_score}</p>
+                <p><strong>Level 1 Score:</strong> ${userData.highest_score_lvl_1}</p>
+                <p><strong>Level 2 Score:</strong> ${userData.highest_score_lvl_2}</p>
+            `;
+            studentDiv.appendChild(scoreDetailsDiv);
+
+            return studentDiv;
+        }
+
+        function toggleScoreDetails(studentDiv, userData) {
+            const scoreDetailsDiv = studentDiv.querySelector('.score-details');
+            scoreDetailsDiv.style.display = scoreDetailsDiv.style.display === 'none' || scoreDetailsDiv.style.display === '' ? 'block' : 'none';
+        }
+
+        window.filterStudents = function filterStudents() {
+            const filterValue = document.getElementById('searchInput').value.toLowerCase();
+            const usersListElement = document.getElementById('usersList');
+
+            // Clear the list
+            usersListElement.innerHTML = '';
+
+            // Filter students based on the input
+            const filteredStudents = studentsList.filter(student => {
+                const fullName = `${student.first_name.toLowerCase()} ${student.last_name.toLowerCase()}`;
+                return fullName.includes(filterValue);
+            });
+
+            // Re-render the filtered list
+            filteredStudents.forEach(studentData => {
+                const studentDiv = createStudentDiv(studentData);
+                usersListElement.appendChild(studentDiv);
+            });
+        };
+
+        // Set up the load event
+        window.onload = loadScores;
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h2>ACID BASE GAME</h2>
+        <h1>Scores</h1>
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="Search by name..." onkeyup="filterStudents()">
+        </div>
+        <div class="list-container" id="usersList"></div>
+        <a href="index.html" class="back-btn">Back to Home</a>
+    </div>
+</body>
+</html>

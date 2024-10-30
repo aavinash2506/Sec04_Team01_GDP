@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ACID BASE Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            margin: 0;
+        }
+
+        .container {
+            text-align: center;
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        form {
+            margin-bottom: 20px;
+        }
+
+        label, input, select, button {
+            font-size: 1.2em;
+            margin: 10px 0;
+        }
+
+        input, select {
+            padding: 10px;
+            width: 100%;
+            max-width: 300px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .secondary-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .secondary-buttons a {
+            text-decoration: none;
+            padding: 10px 20px;
+            background-color: #008CBA;
+            color: white;
+            border-radius: 5px;
+        }
+
+        .secondary-buttons a:hover {
+            background-color: #007bb5;
+        }
+    </style>
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+        import { getFirestore, collection, getDocs, addDoc, query, where } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyCLISdftVxzhPWSVUuYc7osmEg6v4fomTQ",
+            authDomain: "acidbasegame-a9d8a.firebaseapp.com",
+            databaseURL: "https://acidbasegame-a9d8a-default-rtdb.firebaseio.com",
+            projectId: "acidbasegame-a9d8a",
+            storageBucket: "acidbasegame-a9d8a.appspot.com",
+            messagingSenderId: "1038707828573",
+            appId: "1:1038707828573:web:56a1902384530d98a3aab4"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // Declare submitChemical function
+        async function submitChemical() {
+            const dropdown = document.getElementById('type').value;
+            const chemicalInput = document.getElementById('chemical').value.trim().toLowerCase();
+
+            if (!chemicalInput) {
+                alert('Please enter a question!');
+                return;
+            }
+
+            // Check if the question already exists in any type
+            const chemicalCollection = collection(db, "questions");
+
+            const acidQuery = query(chemicalCollection, where("acid", "==", chemicalInput));
+            const baseQuery = query(chemicalCollection, where("base", "==", chemicalInput));
+            const neutralQuery = query(chemicalCollection, where("neutral", "==", chemicalInput));
+
+            const acidSnapshot = await getDocs(acidQuery);
+            const baseSnapshot = await getDocs(baseQuery);
+            const neutralSnapshot = await getDocs(neutralQuery);
+
+            if (!acidSnapshot.empty || !baseSnapshot.empty || !neutralSnapshot.empty) {
+                // If the question exists in any type, show an alert
+                alert('Question already exists in the database.');
+                return;
+            }
+
+            // If question doesn't exist in any type, add it
+            try {
+                let newChemical = {};
+                newChemical[dropdown] = chemicalInput;
+
+                await addDoc(chemicalCollection, newChemical);
+                alert('Question added successfully!');
+            } catch (error) {
+                console.error("Error adding document: ", error);
+            }
+        }
+
+        // Make submitChemical available globally
+        window.submitChemical = submitChemical;
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>ACID BASE</h1>
+        <form onsubmit="event.preventDefault(); submitChemical();">
+            <label for="type">Select Type:</label>
+            <select id="type" name="type">
+                <option value="acid">Acid</option>
+                <option value="base">Base</option>
+                <option value="neutral">Neutral</option>
+            </select><br><br>
+
+            <label for="chemical">Question:</label>
+            <input type="text" id="chemical" name="chemical" placeholder="Enter question here"><br><br>
+
+            <button type="submit">Submit</button>
+        </form>
+
+        <div class="secondary-buttons">
+            <a href="questions.html">View Questions</a>
+            <a href="score.html">View Score</a>
+        </div>
+    </div>
+</body>
+</html>
