@@ -88,20 +88,15 @@ func update_score():
 	
 	
 
-func update_score_old():
-	
-	if not player_dead:
-		#print("update_score_old..previous:: "+str(score)+"  score+1 = "+str(score+1))
-		$hud/PanelContainer/HBoxContainer/ProgressBar.value+=1
-		score += 1
-		
-		#print("score: "+str(score)+"  highscore: "+str(highscore))
-		#if score>10:
-			#get_tree().change_scene_to_file("res://World/select_levels.tscn")
-		if (highscore<score):
-			highscore = score
-		if (score >= 8):
-			victory = true
+func update_score_new():
+	if player_dead:
+		return
+	var progress_bar = $hud/PanelContainer/HBoxContainer/ProgressBar
+	progress_bar.value += 1
+	score += 1
+	highscore = max(highscore, score)
+	victory = score >= 8
+
 	#$hud/PanelContainer/HBoxContainer/Score.text = "Score:\n" + str(score)
 	
 	
