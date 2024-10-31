@@ -30,17 +30,20 @@ func _on_attack_timer_timeout():
 		attack_duration_timer.start()
 		attack()
 	else: enemy_sprite.play("Idle")
+#enemy attack timeout
 	
 func attack():
 	#print("enemy....attack()")
 	var compound = enemyProjectileScn.instantiate()
 	compound.level = shared_data.current_lvl
 	add_child(compound)
+# code to attack the enemy
 
 func _on_attack_duration_timer_timeout():
 	enemy_sprite.play("Idle")
 	hit_animation_playing = false
-	attack_timer.start()  # Restart the attack timer for the next attack cycle
+	attack_timer.start()  
+#Clear and restart the attack timer for the next round.
 
 
 func _on_projectile_finished():
