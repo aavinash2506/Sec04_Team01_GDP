@@ -13,7 +13,7 @@ Venkatesh Mudam
 
 .........................................................................
 WORK WITH THE PROJECT....................................................<br>
-**AIM:** <br>
+**Aim of the project:** <br>
 _Educational_: It serves as an educational tool to teach players about chemistry concepts such as acids and bases. 
 
 _Problem-solving Skills_: The game could challenge players to strategize and solve questions as they navigate through levels playing with acids, bases and reactance products. 
