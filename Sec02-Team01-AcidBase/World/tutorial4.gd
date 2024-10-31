@@ -1,20 +1,20 @@
 extends CanvasLayer
 
-#func _ready():
-	#$Button.connect("pressed", self, "_on_button_pressed")
+@export var color_change_speed = 0.5  # Speed of color change
+
+var target_color = Color(0, 0, 0)  # Starting target color
+var current_color = Color(1, 1, 1)  # Current background color
+
+func _ready():
+	# Set the initial background color
+	self.modulate = current_color
 
 func _process(delta):
-	pass
+	# Lerp towards the target color
+	current_color = current_color.linear_interpolate(target_color, color_change_speed * delta)
 
-func _on_button_pressed():
-	# Print confirmation message
-	print("Button pressed! Loading new scene...")
+	# Apply the current color to the background
+	self.modulate = current_color
 
-	# Hide the button to prevent multiple presses
-	$Button.visible = false
-
-	# Change background color to a random color
-	#modulate = Color(randf(), randf(), randf())
-
-	# Switch to the new scene
-	get_tree().change_scene_to_file("res://World/select_tutorials.tscn")
+	# Randomly change the target color every few seconds
+#		target_color = Color(randf(), randf(), randf())  # Set a new random color
