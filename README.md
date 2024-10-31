@@ -12,7 +12,17 @@ Avinash Vengalasetti
 Venkatesh Mudam
 
 .........................................................................
-WORK WITH THE PROJECT....................................................
+WORK WITH THE PROJECT....................................................<br>
+**AIM:** <br>
+_Educational_: It serves as an educational tool to teach players about chemistry concepts such as acids and bases. 
+
+_Problem-solving Skills_: The game could challenge players to strategize and solve questions as they navigate through levels playing with acids, bases and reactance products. 
+
+_Entertainment_: Like many games, the primary purpose could be entertainment. The challenges could provide players with an enjoyable and engaging experience, offering a unique twist on the platformer. 
+
+_Engagement with Science_: By gamifying scientific concepts, the project could aim to engage players who might not typically be interested in science. By making chemistry fun and accessible. 
+
+_Competition and Achievement_: The game could include elements of competition, such as motivating players to improve their skills and progress further. 
 
 **Level 1:** Play with Acids <br>
 Purpose: Familiarize players with the properties of acids.<br>
